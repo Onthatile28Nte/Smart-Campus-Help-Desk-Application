@@ -198,17 +198,113 @@
             border-bottom-color: var(--primary-dark);
         }
 
-        /* Placeholder for Developer B */
-        .dev-b-placeholder {
-            border: 2px dashed #cbd5e1;
-            padding: 40px;
-            text-align: center;
-            color: #64748b;
-            border-radius: 8px;
-            margin-top: 40px;
+        /* Tickets List */
+        .tickets-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .debug-output {
+        .ticket-card {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            text-align: left;
+            color: var(--text-dark);
+            transition: box-shadow 0.2s;
+        }
+
+        .ticket-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .ticket-number {
             font-family: var(--font-mono);
-            margin-top: 10px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .ticket-status-badge {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ticket-status-badge.open {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .ticket-status-badge.in-progress {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .ticket-status-badge.resolved {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .ticket-submitter {
+            font-family: var(--font-heading);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .ticket-description {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .ticket-date {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 16px;
+        }
+
+        .ticket-meta {
+            display: flex;
+            align-items: center;
+        }
+
+        .ticket-category {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background-color: #f9fafb;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .no-results-title {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
         }
