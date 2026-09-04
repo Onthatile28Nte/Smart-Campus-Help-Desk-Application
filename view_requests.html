@@ -41,13 +41,11 @@
             </div>
 
             <div class="search-container">
-                <input 
-                    type="text" 
-                    id="search-input" 
-                    class="search-input" 
-                    placeholder="Search by name or ticket number"
-                    autocomplete="off"
-                >
+                <input type="text"
+                       id="search-input"
+                       class="search-input"
+                       placeholder="Search by name or ticket number"
+                       autocomplete="off">
             </div>
         </section>
 
@@ -64,6 +62,64 @@
 
     <!-- State Orchestration Script -->
     <script>
+        // Sample ticket data
+        const sampleTickets = [
+            {
+                id: 1,
+                number: 'TCK-04822',
+                submitterName: 'John Smith',
+                description: 'Cannot connect to WiFi',
+                category: 'WiFi & Network',
+                status: 'open',
+                date: 'May 08, 2024, 10:30'
+            },
+            {
+                id: 2,
+                number: 'TCK-04821',
+                submitterName: 'Sarah Johnson',
+                description: 'Printer not responding on 3rd floor',
+                category: 'Printing',
+                status: 'in-progress',
+                date: 'May 07, 2024, 14:15'
+            },
+            {
+                id: 3,
+                number: 'TCK-04820',
+                submitterName: 'Mike Chen',
+                description: 'Software license renewal needed',
+                category: 'Software',
+                status: 'resolved',
+                date: 'May 06, 2024, 09:45'
+            },
+            {
+                id: 4,
+                number: 'TCK-04819',
+                submitterName: 'Emily Rodriguez',
+                description: 'Login credentials reset required',
+                category: 'Account Access',
+                status: 'open',
+                date: 'May 05, 2024, 16:20'
+            },
+            {
+                id: 5,
+                number: 'TCK-04818',
+                submitterName: 'David Park',
+                description: 'Monitor display issues and flickering',
+                category: 'Hardware',
+                status: 'in-progress',
+                date: 'May 04, 2024, 11:00'
+            },
+            {
+                id: 6,
+                number: 'TCK-04817',
+                submitterName: 'Jessica Lee',
+                description: 'Email synchronization problem',
+                category: 'Email',
+                status: 'resolved',
+                date: 'May 03, 2024, 13:30'
+            }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             // State
             let state = {
@@ -75,8 +131,60 @@
             const filterContainer = document.getElementById('status-filters');
             const filterPills = filterContainer.querySelectorAll('.pill');
             const searchInput = document.getElementById('search-input');
-            const debugStatus = document.getElementById('debug-status');
-            const debugSearch = document.getElementById('debug-search');
+            const ticketsContainer = document.getElementById('tickets-container');
+
+            // Filter and search tickets
+            const getFilteredTickets = () => {
+                let filtered = sampleTickets;
+
+                // Filter by status
+                if (state.status !== 'all') {
+                    filtered = filtered.filter(t => t.status === state.status);
+                }
+
+                // Filter by search term
+                if (state.search.trim() !== '') {
+                    const searchTerm = state.search.toLowerCase();
+                    filtered = filtered.filter(t =>
+                        t.number.toLowerCase().includes(searchTerm) ||
+                        t.submitterName.toLowerCase().includes(searchTerm)
+                    );
+                }
+
+                return filtered;
+            };
+
+            // Render tickets
+            const renderTickets = () => {
+                const filteredTickets = getFilteredTickets();
+
+                if (filteredTickets.length === 0) {
+                    ticketsContainer.innerHTML = `
+                            <div class="no-results">
+                                <div class="no-results-title">No tickets found</div>
+                                <p>Try adjusting your filters or search term</p>
+                            </div>
+                        `;
+                    return;
+                }
+
+                const ticketsHTML = filteredTickets.map(ticket => `
+                        <div class="ticket-card">
+                            <div class="ticket-header">
+                                <span class="ticket-number"># ${ticket.number}</span>
+                                <span class="ticket-status-badge ${ticket.status}">${ticket.status === 'in-progress' ? 'In Progress' : ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}</span>
+                            </div>
+                            <div class="ticket-submitter">${ticket.submitterName}</div>
+                            <div class="ticket-description">${ticket.description}</div>
+                            <div class="ticket-date">${ticket.date}</div>
+                            <div class="ticket-meta">
+                                <div class="ticket-category">${ticket.category}</div>
+                            </div>
+                        </div>
+                    `).join('');
+
+                ticketsContainer.innerHTML = `<div class="tickets-list">${ticketsHTML}</div>`;
+            };
 
             // Initialize state from URL params
             const initFromUrl = () => {
@@ -87,20 +195,20 @@
                 if (urlStatus && ['all', 'open', 'in-progress', 'resolved'].includes(urlStatus)) {
                     state.status = urlStatus;
                 }
-                
+
                 if (urlSearch) {
                     state.search = urlSearch;
                     searchInput.value = urlSearch;
                 }
 
                 updateUI();
-                notifyDeveloperB();
+                renderTickets();
             };
 
             // Sync state to URL params
             const syncToUrl = () => {
                 const params = new URLSearchParams(window.location.search);
-                
+
                 if (state.status !== 'all') {
                     params.set('status', state.status);
                 } else {
@@ -128,24 +236,13 @@
                 });
             };
 
-            // Pass state to Dev B (simulated via events/function call)
-            const notifyDeveloperB = () => {
-                // In a real app, you might emit a custom event or call a global render function
-                // e.g., window.renderTicketsList(state);
-                console.log('State updated, passing to Dev B:', state);
-                
-                // Update debug placeholder
-                debugStatus.textContent = state.status;
-                debugSearch.textContent = state.search;
-            };
-
             // Status Filter Click Handler
             filterContainer.addEventListener('click', (e) => {
                 if (e.target.classList.contains('pill')) {
                     state.status = e.target.dataset.status;
                     updateUI();
                     syncToUrl();
-                    notifyDeveloperB();
+                    renderTickets();
                 }
             });
 
@@ -156,7 +253,7 @@
                 debounceTimer = setTimeout(() => {
                     state.search = e.target.value;
                     syncToUrl();
-                    notifyDeveloperB();
+                    renderTickets();
                 }, 300); // 300ms debounce
             });
 
