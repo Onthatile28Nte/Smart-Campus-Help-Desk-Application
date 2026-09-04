@@ -21,6 +21,7 @@
   --radius-sm: 3px;
   --radius-md: 6px;
   --max-width: 420px;
+  --max-width-desktop: 1180px;
 }
 
 * { box-sizing: border-box; }
@@ -40,6 +41,11 @@ main {
   padding: 0 20px 48px;
 }
 
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
 /* ===================================================================
    Nav
    =================================================================== */
@@ -52,6 +58,15 @@ main {
   background: var(--navy-900);
 }
 
+.navbar-inner {
+  width: 100%;
+  max-width: var(--max-width-desktop);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -59,8 +74,8 @@ main {
 }
 
 .brand-mark {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.4);
   object-fit: cover;
@@ -73,7 +88,7 @@ main {
 }
 
 .brand-eyebrow {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -81,7 +96,7 @@ main {
 .brand-name {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 15px;
+  font-size: 19px;
   color: #fff;
 }
 
@@ -363,4 +378,70 @@ main {
 @media (max-width: 380px) {
   .hero-title { font-size: 22px; }
   .stats-row { gap: 18px; }
+}
+
+/* ===================================================================
+   Desktop (900px+): two-column layout — info left, ticket card
+   pinned right, everything sized up for the wider canvas.
+   =================================================================== */
+@media (min-width: 900px) {
+  main {
+    max-width: var(--max-width-desktop);
+    padding: 0 40px 80px;
+  }
+
+  .layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 64px;
+    margin-top: 12px;
+  }
+
+  .layout-info {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .hero { padding-top: 44px; }
+
+  .hero-kicker { font-size: 12px; }
+
+  .hero-title {
+    font-size: 40px;
+    max-width: 16ch;
+    margin-bottom: 28px;
+  }
+
+  .hero-actions { margin-bottom: 40px; }
+
+  .btn { font-size: 14px; padding: 12px 22px; }
+
+  .stats-row { gap: 48px; }
+
+  .stat strong { font-size: 26px; }
+  .stat span { font-size: 12px; }
+
+  .intro { margin-top: 56px; padding-top: 32px; }
+
+  .intro-title { font-size: 30px; }
+
+  .intro-copy { font-size: 15px; max-width: 42ch; }
+
+  .checklist { max-width: 46ch; }
+  .checklist li { font-size: 14px; }
+
+  .ticket-card {
+    flex: 0 0 380px;
+    position: sticky;
+    top: 32px;
+    margin-top: 44px;
+    padding: 34px 30px 30px;
+  }
+
+  .ticket-title { font-size: 22px; }
+}
+
+@media (min-width: 1300px) {
+  .hero-title { font-size: 46px; }
+  .ticket-card { flex-basis: 420px; }
 }
