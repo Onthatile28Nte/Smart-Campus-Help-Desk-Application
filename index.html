@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Campus Help Desk</title>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <img src="images/SCHD-logo.png" alt="SCHD-logo">
+        <div>Help Desk Smart Campus</div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <section>
+            <h2>Something broken on campus? <em>Log it once, we’ll take it from here</em></h2>
+            <div>
+                <button>View requests</button>
+            </div>
+
+            <div>
+                <p><strong>4 hrs</strong> avg. response time</p>
+                <p><strong>92%</strong> resolved in one visit</p>
+                <p><strong>Desk open:</strong> Mon–Fri, 8AM–8PM</p>
+            </div>
+        </section>
+
+        <section>
+            <h3>Fill it out like a ticket stub.</h3>
+            <p>Give us the essentials below. You’ll get a ticket number the moment you submit, and email updates as your status changes.</p>
+
+            <ul>
+                <li>Use your full name so we can find your student record</li>
+                <li>Pick the closest category as it decides which technician you get</li>
+                <li>Be specific: room number, error message, what you already tried</li>
+            </ul>
+        </section>
+
+        <!-- Form -->
+        <section>
+            <h4>Smart Campus Help Desk</h4>
+            <h2>Submit a Technical Support Request</h2>
+
+            <form>
+                <label for="student-name">Student Name</label><br>
+                <input type="text" id="student-name" name="student-name"><br><br>
+
+                <label for="issue-category">Issue Category</label><br>
+                <select id="issue-category" name="issue-category">
+                    <option>Select Category</option>
+                </select><br><br>
+
+                <label for="date">Date</label><br>
+                <input type="date" id="date" name="date"><br><br>
+
+                <label for="description">Description</label><br>
+                <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+
+                <label for="status">Status</label><br>
+                <input type="text" id="status" name="status" value="Open" readonly><br><br>
+
+                <button type="submit">Submit Request</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
