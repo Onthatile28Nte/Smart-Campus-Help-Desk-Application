@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Requests - Smart Campus Help Desk</title>
+    <!-- Use Google Fonts for better approximation of the mockup -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f3ef;
+            --primary-dark: #1e283d;
+            --accent-gold: #a68444;
+            --text-dark: #111827;
+            --text-muted: #4b5563;
+            --border-color: #d1d5db;
+            
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--primary-dark);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-bottom: 4px solid var(--accent-gold);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-mark {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-family: var(--font-heading);
+            font-size: 20px;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-text .eyebrow {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .brand-text .title {
+            font-family: var(--font-heading);
+            font-size: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-gold {
+            background-color: var(--accent-gold);
+            color: var(--primary-dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-gold:hover {
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+        .page-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .page-eyebrow::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1px;
+            background-color: var(--accent-gold);
+        }
+
+        .page-title {
+            font-family: var(--font-heading);
+            font-size: 42px;
+            line-height: 1.2;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .page-desc {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-muted);
+            max-width: 500px;
+        }
+
+        /* Controls Section */
+        .controls-section {
+            margin-bottom: 40px;
+        }
+
+        /* Filter Pills */
+        .filter-pills {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+        }
+
+        .pill {
+            background: transparent;
+            border: 1px solid var(--primary-dark);
+            color: var(--primary-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pill:hover {
+            background-color: rgba(30, 40, 61, 0.05);
+        }
+
+        .pill.active {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+            font-size: 15px;
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            border-bottom-color: var(--primary-dark);
+        }
+
+        /* Placeholder for Developer B */
+        .dev-b-placeholder {
+            border: 2px dashed #cbd5e1;
+            padding: 40px;
+            text-align: center;
+            color: #64748b;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- App Shell: Global Navigation -->
+    <nav class="navbar">
+        <div class="brand">
+            <div class="logo-mark">SC</div>
+            <div class="brand-text">
+                <span class="eyebrow">HELP DESK</span>
+                <span class="title">Smart Campus</span>
+            </div>
+        </div>
+        <button class="btn-gold">New Request</button>
+    </nav>
+
+    <!-- Global Layout -->
+    <main>
+        <!-- Page Header Section -->
+        <header class="page-header">
+            <div class="page-eyebrow">PAGE 2 - VIEW REQUESTS</div>
+            <h1 class="page-title">Every ticket you've filed,<br>in one ledger.</h1>
+            <p class="page-desc">Track status, revisit details, or follow up on anything still open, and the newest requests sit at the top.</p>
+        </header>
+
+        <!-- Filter Controls -->
+        <section class="controls-section">
+            <div class="filter-pills" id="status-filters">
+                <button class="pill active" data-status="all">All</button>
+                <button class="pill" data-status="open">Open</button>
+                <button class="pill" data-status="in-progress">In progress</button>
+                <button class="pill" data-status="resolved">Resolved</button>
+            </div>
+
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    class="search-input" 
+                    placeholder="Search by name or ticket number"
+                    autocomplete="off"
+                >
+            </div>
+        </section>
+
+        <!-- Developer B's List Container Placeholder -->
+        <div id="tickets-container" class="dev-b-placeholder">
+            <p><strong>[Developer B's Scope]</strong></p>
+            <p>List container will render here based on current state:</p>
+            <p style="font-family: monospace; margin-top: 10px;">
+                Status: <span id="debug-status">all</span> | 
+                Search: "<span id="debug-search"></span>"
+            </p>
+        </div>
+    </main>
+
+    <!-- State Orchestration Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // State
+            let state = {
+                status: 'all',
+                search: ''
+            };
+
+            // DOM Elements
+            const filterContainer = document.getElementById('status-filters');
+            const filterPills = filterContainer.querySelectorAll('.pill');
+            const searchInput = document.getElementById('search-input');
+            const debugStatus = document.getElementById('debug-status');
+            const debugSearch = document.getElementById('debug-search');
+
+            // Initialize state from URL params
+            const initFromUrl = () => {
+                const params = new URLSearchParams(window.location.search);
+                const urlStatus = params.get('status');
+                const urlSearch = params.get('search');
+
+                if (urlStatus && ['all', 'open', 'in-progress', 'resolved'].includes(urlStatus)) {
+                    state.status = urlStatus;
+                }
+                
+                if (urlSearch) {
+                    state.search = urlSearch;
+                    searchInput.value = urlSearch;
+                }
+
+                updateUI();
+                notifyDeveloperB();
+            };
+
+            // Sync state to URL params
+            const syncToUrl = () => {
+                const params = new URLSearchParams(window.location.search);
+                
+                if (state.status !== 'all') {
+                    params.set('status', state.status);
+                } else {
+                    params.delete('status');
+                }
+
+                if (state.search.trim() !== '') {
+                    params.set('search', state.search);
+                } else {
+                    params.delete('search');
+                }
+
+                const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+                window.history.replaceState({}, '', newUrl);
+            };
+
+            // Update local UI (Pills)
+            const updateUI = () => {
+                filterPills.forEach(pill => {
+                    if (pill.dataset.status === state.status) {
+                        pill.classList.add('active');
+                    } else {
+                        pill.classList.remove('active');
+                    }
+                });
+            };
+
+            // Pass state to Dev B (simulated via events/function call)
+            const notifyDeveloperB = () => {
+                // In a real app, you might emit a custom event or call a global render function
+                // e.g., window.renderTicketsList(state);
+                console.log('State updated, passing to Dev B:', state);
+                
+                // Update debug placeholder
+                debugStatus.textContent = state.status;
+                debugSearch.textContent = state.search;
+            };
+
+            // Status Filter Click Handler
+            filterContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('pill')) {
+                    state.status = e.target.dataset.status;
+                    updateUI();
+                    syncToUrl();
+                    notifyDeveloperB();
+                }
+            });
+
+            // Search Input Handler (with Debounce)
+            let debounceTimer;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    state.search = e.target.value;
+                    syncToUrl();
+                    notifyDeveloperB();
+                }, 300); // 300ms debounce
+            });
+
+            // Run initialization
+            initFromUrl();
+        });
+    </script>
+</body>
+</html>
